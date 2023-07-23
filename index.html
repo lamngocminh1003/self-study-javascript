@@ -5,7 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>self-study javascript</title>
   </head>
-  <script src="./Reduce/Reduce.js"></script>
+  <script src="./lodash/lodash.js"></script>
+  <script>
+    //...
+    let arr = [1, 2, 3, 4];
+    console.log("check arr", arr);
+    let arr2 = [...arr, 6];
+    console.log("check arr2", arr2);
+    let state = [
+      { name: "Amie", age: 21 },
+      { name: "Shin", age: 21 },
+      { name: "Bo", age: 21 },
+    ];
+    let state2 = [...state];
+     
+    console.log("check state2", state2);
+    const callback = (error, data) => {
+      if (error) {
+        console.log("check callbacks", error);
+      }
+      if (data) {
+        console.log("check callbacks", data);
+      }
+    };
+    getToDo = (id, callback) => {
+      return new Promise((resolve, reject) => {
+        try {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status == 200) {
+              // Typical action to be performed when the document is ready:
+              let data = JSON.parse(xhttp.responseText);
+              let dataString = JSON.stringify(data);
+              resolve(data);
+              console.log("data:", data);
+            } else {
+              console.log("status: " + xhttp.status);
+              reject("sth wrong with id:", id);
+            }
+          };
+          xhttp.open(
+            "GET",
+            "https://jsonplaceholder.typicode.com/todos/1",
+            true
+          );
+          xhttp.send();
+        } catch (error) {
+          reject("sth wrong hihi");
+        }
+      });
+    };
+    // getToDo(1)
+    //   .then((data1) => {
+    //     console.log("get data: ", data1);
+    //     return getToDo(2);
+    //   })
+    //   .then((data2) => {
+    //     console.log("get data: ", data2);
+    //     return getToDo(3);
+    //   })
+    //   .then((data3) => {
+    //     console.log("get data: ", data3);
+    //     return getToDo(4);
+    //   })
+    //   .catch((err) => {
+    //     console.log("get data: ", err);
+    //   });
+    // let promiseExp = () => {
+    //   return new Promise((resolve, reject) => {
+    //     try {
+    //       // resolve({ name: "Amie", age: 21 });
+    //     } catch (error) {
+    //       reject("sth wrong hihi");
+    //     }
+    //   });
+    // };
+    // promiseExp().then((data) => {
+    //   console.log(data);
+    // });
+    // fetch("https://jsonplaceholder.typicode.com/todos/1")
+    //   .then((data) => {
+    //     return data.json();
+    //   })
+    //   .then((data) => {
+    //     console.log("fetch data: ", data);
+    //   });
+    // getNewToDo = async (id) => {
+    //   let res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
+    //   console.log("check res: ", res);
+    //   if (res && res.status !== 200) {
+    //     throw new Error("Something went wrong with status code: ", res.status);
+    //   }
+    //   let data = await res.json();
+    //   console.log("get data: ", data);
+    //   return data;
+    // };
+    // getNewToDo("bbjvjk")
+    //   .then((data) => {
+    //     "check data", data;
+    //   })
+    //   .catch((err) => {
+    //     console.log("check err", err);
+    //   });
+    getNewToDo = async (id) => {
+      try {
+        let res = await fetch(
+          `https://jsonplaceholder.typicode.com/todos/${id}`
+        );
+        if (res && res.status !== 200) {
+          throw new Error(
+            "Something went wrong with status code: ",
+            res.status
+          );
+        }
+        let data = await res.json();
+        return data;
+      } catch (error) {
+        console.log("check err", error);
+      }
+    };
+  </script>
   <body>
     <h1>Hello world from html</h1>
   </body>
